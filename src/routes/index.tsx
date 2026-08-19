@@ -10,7 +10,6 @@ import clusterPramb from "@/assets/cluster-prambanan.jpg";
 import {
   BatikBg,
   BeyondJogja,
-  CountUp,
   GoldItalic,
   Reveal,
   SiteFooter,
@@ -338,88 +337,38 @@ function TieredPreview() {
 }
 
 /* ---------- Testimonials ---------- */
+// DO NOT populate with fabricated names, quotes, or statistics — verified guest data only
 function Testimonials() {
-  const quotes = [
-    {
-      name: "Helena M.",
-      meta: "London, UK · 3 Days · Signature",
-      body: "The silence of a Borobudur sunrise. Every entrance, every stop, already arranged before we arrived — we simply moved through the day.",
-    },
-    {
-      name: "Amara & Devon",
-      meta: "Melbourne, Australia · 1 Day · Classic",
-      body: "We booked a single day. It was treated like a fully curated experience — nothing rushed, nothing generic.",
-    },
-    {
-      name: "Yui K.",
-      meta: "Tokyo, Japan · 4 Days · Signature",
-      body: "Understated luxury. Quiet EV, quiet driver, quiet mornings. Nothing was ever hurried.",
-    },
-  ];
   return (
     <BatikBg>
       <section className="py-24 md:py-32 px-6">
         <div className="max-w-6xl mx-auto">
           <Reveal>
-            <h2 className="font-serif text-4xl md:text-5xl text-ivory">What Past Guests Say</h2>
+            <h2 className="font-serif text-4xl md:text-5xl text-ivory">Guest Stories</h2>
           </Reveal>
-          <Reveal delay={120}>
-            <div className="mt-10 grid grid-cols-3 gap-6 border-y border-gold/20 py-8">
-              <Stat value={4.98} decimals={2} label="Average rating" />
-              <Stat value={120} decimals={0} suffix="+" label="Journeys arranged" />
-              <Stat value={100} decimals={0} suffix="%" label="Would recommend" />
-            </div>
-          </Reveal>
-          <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-6">
-            {quotes.map((q, i) => (
-              <Reveal key={q.name} delay={i * 90}>
-                <figure className="h-full p-8 border border-gold/20 bg-indigo/30">
-                  <svg width="28" height="20" viewBox="0 0 28 20" fill="#C9A96E" aria-hidden="true">
-                    <path d="M0 20V10C0 4.5 4 0 10 0v4C6.7 4 4 6.7 4 10h6v10H0zm18 0V10c0-5.5 4-10 10-10v4c-3.3 0-6 2.7-6 6h6v10H18z" />
-                  </svg>
-                  <blockquote className="mt-4 font-serif italic text-lg text-ivory leading-relaxed">
-                    {q.body}
-                  </blockquote>
-                  <figcaption className="mt-6 pt-4 border-t border-ivory/10">
-                    <p className="text-ivory">{q.name}</p>
-                    <p className="text-xs tracking-wide text-ivory/60 mt-1">{q.meta}</p>
-                  </figcaption>
-                </figure>
-              </Reveal>
-            ))}
-          </div>
-          <div className="mt-14 text-center">
-            <a
-              href="#"
-              className="text-sm text-ivory/70 tracking-widest uppercase border-b border-gold/50 pb-1 hover:text-gold transition"
-            >
-              Read All Reviews →
-            </a>
+          <div className="mt-14 grid grid-cols-1">
+            <Reveal>
+              <figure className="h-full p-10 md:p-14 border border-gold/20 bg-indigo/30 text-center max-w-3xl mx-auto">
+                <svg
+                  width="28"
+                  height="20"
+                  viewBox="0 0 28 20"
+                  fill="#C9A96E"
+                  aria-hidden="true"
+                  className="mx-auto"
+                >
+                  <path d="M0 20V10C0 4.5 4 0 10 0v4C6.7 4 4 6.7 4 10h6v10H0zm18 0V10c0-5.5 4-10 10-10v4c-3.3 0-6 2.7-6 6h6v10H18z" />
+                </svg>
+                <blockquote className="mt-6 font-serif italic text-xl md:text-2xl text-ivory leading-relaxed">
+                  Our first journeys are just getting started — real guest stories will appear here
+                  soon.
+                </blockquote>
+              </figure>
+            </Reveal>
           </div>
         </div>
       </section>
     </BatikBg>
-  );
-}
-
-function Stat({
-  value,
-  decimals,
-  suffix,
-  label,
-}: {
-  value: number;
-  decimals: number;
-  suffix?: string;
-  label: string;
-}) {
-  return (
-    <div className="text-center">
-      <p className="font-serif text-4xl md:text-5xl text-gold">
-        <CountUp end={value} decimals={decimals} suffix={suffix} />
-      </p>
-      <p className="mt-2 text-xs uppercase tracking-widest text-ivory/60">{label}</p>
-    </div>
   );
 }
 
