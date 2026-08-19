@@ -18,6 +18,15 @@ import {
   WhatsAppCTA,
   WhatsAppFab,
 } from "@/components/site";
+import {
+  BatikWatermark,
+  CrossfadeToggle,
+  ParallaxImage,
+  ScrollReveal,
+  SectionDivider,
+  useInView,
+  useReducedMotion,
+} from "@/components/motion";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -85,14 +94,16 @@ function Hero() {
           </p>
           <h1 className="font-serif text-5xl md:text-7xl leading-[1.05] text-ivory">
             Your Private Yogyakarta, <br />
-            Curated in <GoldItalic>Silence</GoldItalic>
+            Curated <GoldItalic>Down to the Hour</GoldItalic>
           </h1>
           <p className="mt-6 text-ivory/80 max-w-xl text-lg leading-relaxed">
-            Chauffeured EV touring for travelers who expect more than a tour — Borobudur,
-            Prambanan, and the stories between them, in complete comfort.
+            Chauffeured EV touring for travelers who expect more than a tour. We take you through
+            Borobudur, Prambanan, and the quieter stories in between, all in complete comfort.
           </p>
           <div className="mt-8">
-            <WhatsAppCTA message="Hi Agni Aksa — I'd like to plan a private tour in Yogyakarta." />
+            <WhatsAppCTA message="Hi Agni Aksa — I'd like to plan a private tour in Yogyakarta.">
+              Reach Us on WhatsApp
+            </WhatsAppCTA>
           </div>
         </div>
       </div>
@@ -105,50 +116,65 @@ function TrustBar() {
   const bullets = [
     { title: "Premium Fleet", body: "Chartered EVs when available, always premium-class." },
     { title: "English-Speaking Drivers", body: "Culturally fluent, discreet." },
-    { title: "No Hidden Stops", body: "No souvenir detours, ever." },
     {
       title: "We Guide, You Choose",
-      body: "We take you to places worth seeing — the choice to browse or buy is always yours.",
+      body: "We show you what's worth seeing. The rest is your pace, your call.",
     },
   ];
+  const reduced = useReducedMotion();
+  const { ref, inView } = useInView<HTMLDivElement>(0.05);
   return (
     <section className="relative">
-      <div className="relative h-[70vh] min-h-[520px] w-full overflow-hidden">
-        <img
-          src={groundImg}
-          alt="Borobudur stairway at golden hour"
-          loading="lazy"
-          className="w-full h-full object-cover"
+      {/* Hero drone shot crossfades into this closer temple view, then resolves to flat ivory */}
+      <div ref={ref} className="relative h-[70vh] min-h-[520px] w-full overflow-hidden bg-indigo">
+        <ParallaxImage
+          src={heroImg}
+          alt=""
+          speed={0.18}
+          className="absolute inset-0 h-full w-full"
         />
+        <div
+          className="absolute inset-0"
+          style={{
+            opacity: reduced ? 1 : inView ? 1 : 0,
+            transition: reduced ? undefined : "opacity 1100ms cubic-bezier(0.16,1,0.3,1)",
+          }}
+        >
+          <ParallaxImage
+            src={groundImg}
+            alt="Borobudur stairway at golden hour"
+            speed={0.3}
+            className="absolute inset-0 h-full w-full"
+          />
+        </div>
         <div className="absolute inset-0 bg-gradient-to-b from-indigo/30 via-ivory/40 to-ivory" />
       </div>
       <div className="bg-ivory px-6 pb-24 -mt-24 md:-mt-40 relative">
         <div className="max-w-6xl mx-auto">
-          <Reveal>
+          <ScrollReveal>
             <h2 className="font-serif text-4xl md:text-5xl text-charcoal max-w-3xl leading-tight">
               Quietly Trusted by Travelers <br />
               <GoldItalic>Who Expect More</GoldItalic>
             </h2>
             <p className="mt-4 text-charcoal/70 max-w-xl">
-              No hidden hours, no wasted stops — every detail arranged before you arrive.
+              No hidden hours. No wasted stops. Every detail is arranged before you arrive.
             </p>
-          </Reveal>
-          <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          </ScrollReveal>
+          <ScrollReveal
+            staggerDelay={100}
+            className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+          >
             {bullets.map((b, i) => (
-              <Reveal key={b.title} delay={i * 90}>
-                <div className="border-t border-bronze/40 pt-6 h-full">
-                  <p className="text-xs tracking-widest uppercase text-gold mb-3">
-                    0{i + 1}
-                  </p>
-                  <h3 className="font-serif text-2xl text-charcoal">{b.title}</h3>
-                  <p className="mt-3 text-sm text-charcoal/70 leading-relaxed">{b.body}</p>
-                </div>
-              </Reveal>
+              <div key={b.title} className="border-t border-bronze/40 pt-6 h-full">
+                <p className="text-xs tracking-widest uppercase text-gold mb-3">0{i + 1}</p>
+                <h3 className="font-serif text-2xl text-charcoal">{b.title}</h3>
+                <p className="mt-3 text-sm text-charcoal/70 leading-relaxed">{b.body}</p>
+              </div>
             ))}
-          </div>
+          </ScrollReveal>
         </div>
       </div>
-      <Skyline variant="dark-on-light" />
+      <SectionDivider tone="bronze" />
     </section>
   );
 }
@@ -159,23 +185,23 @@ function HowItWorks() {
     {
       img: howCal,
       title: "Choose Your Days",
-      body: "Single day or multiple — you decide how much of Jogja to see.",
+      body: "Single day or several. You decide how much of Jogja to see.",
     },
     {
       img: howDriver,
       title: "Pick Your Tier",
-      body: "Classic, Signature, or VIP — every tier includes your private EV and driver.",
+      body: "Classic, Signature, or VIP. Every tier includes your private EV and driver.",
     },
     {
       img: howArrival,
       title: "We Arrange It All",
-      body: "Itinerary, pickups, entries, timing — confirmed with you on WhatsApp.",
+      body: "Itinerary, pickups, entries, and timing, all confirmed with you directly on WhatsApp.",
     },
   ];
   return (
     <section className="bg-ivory py-24 md:py-32 px-6">
       <div className="max-w-6xl mx-auto">
-        <Reveal>
+        <ScrollReveal>
           <h2 className="font-serif text-4xl md:text-5xl text-charcoal max-w-3xl leading-tight">
             Tell Us Your Days, <br />
             <GoldItalic>We Handle the Rest</GoldItalic>
@@ -183,24 +209,47 @@ function HowItWorks() {
           <p className="mt-4 text-charcoal/70 max-w-xl">
             Choose how long you're staying, pick your tier, and we build the itinerary around you.
           </p>
-        </Reveal>
+        </ScrollReveal>
         <div className="mt-20 relative">
-          <div className="hidden md:block absolute top-[72px] left-[16%] right-[16%] h-px bg-gold/50" />
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-14 md:gap-8 relative">
-            {steps.map((s, i) => (
-              <Reveal key={s.title} delay={i * 140}>
-                <div className="flex flex-col items-center text-center px-4">
-                  <div className="relative w-36 h-36 rounded-full overflow-hidden border border-gold/60 shadow-sm bg-white">
-                    <img src={s.img} alt={s.title} loading="lazy" className="w-full h-full object-cover" />
-                  </div>
-                  <p className="mt-6 text-xs tracking-widest uppercase text-gold">Step 0{i + 1}</p>
-                  <h3 className="mt-2 font-serif text-2xl text-charcoal">{s.title}</h3>
-                  <p className="mt-3 text-sm text-charcoal/70 leading-relaxed max-w-xs">{s.body}</p>
-                </div>
-              </Reveal>
+          {/* thin gold connector with arrow motif */}
+          <div className="hidden md:block absolute top-[72px] left-[16%] right-[16%] pointer-events-none">
+            <div className="h-px w-full bg-gold/50" />
+            {[33.333, 66.666].map((left) => (
+              <svg
+                key={left}
+                width="14"
+                height="14"
+                viewBox="0 0 14 14"
+                fill="none"
+                aria-hidden="true"
+                className="absolute -top-[7px] -translate-x-1/2"
+                style={{ left: `${left}%` }}
+              >
+                <path d="M4 2 L9 7 L4 12" stroke="var(--color-gold)" strokeWidth="1.2" />
+              </svg>
             ))}
           </div>
+          <ScrollReveal
+            staggerDelay={140}
+            className="grid grid-cols-1 md:grid-cols-3 gap-14 md:gap-8 relative"
+          >
+            {steps.map((s, i) => (
+              <div key={s.title} className="flex flex-col items-center text-center px-4">
+                <div className="relative w-36 h-36 rounded-full overflow-hidden border border-gold/60 shadow-sm bg-white">
+                  <img src={s.img} alt={s.title} loading="lazy" className="w-full h-full object-cover" />
+                </div>
+                <p className="mt-6 text-xs tracking-widest uppercase text-gold">Step 0{i + 1}</p>
+                <h3 className="mt-2 font-serif text-2xl text-charcoal">{s.title}</h3>
+                <p className="mt-3 text-sm text-charcoal/70 leading-relaxed max-w-xs">{s.body}</p>
+              </div>
+            ))}
+          </ScrollReveal>
         </div>
+        <ScrollReveal className="mt-16 text-center">
+          <WhatsAppCTA message="Hi Agni Aksa — I'd like to plan my days in Yogyakarta.">
+            Reach Us on WhatsApp
+          </WhatsAppCTA>
+        </ScrollReveal>
       </div>
     </section>
   );
@@ -208,24 +257,16 @@ function HowItWorks() {
 
 /* ---------- Heritage Clusters ---------- */
 function HeritageClusters() {
-  const cards = [
-    {
-      img: clusterBoro,
-      title: "Borobudur & the Misty North",
-      subtitle: "Sunrise silence, ancient stone, and Selogriyo hidden in the hills.",
-    },
-    {
-      img: clusterPramb,
-      title: "Prambanan, Kraton & Tamansari",
-      subtitle: "Yogyakarta's living culture in one carefully paced day.",
-    },
-  ];
+  const subtitles: Record<string, string> = {
+    borobudur: "Sunrise silence, ancient stone, and Selogriyo hidden in the hills.",
+    prambanan: "Yogyakarta's living culture in one carefully paced day.",
+  };
   return (
-    <BatikBg>
-      <Skyline variant="light-on-dark" className="rotate-180" />
+    <BatikWatermark>
+      <SectionDivider tone="gold" flip />
       <section className="py-24 md:py-32 px-6">
         <div className="max-w-6xl mx-auto">
-          <Reveal>
+          <ScrollReveal>
             <h2 className="font-serif text-4xl md:text-5xl text-ivory max-w-3xl leading-tight">
               Two Icons of Java, <br />
               <GoldItalic>Ancient Heritage</GoldItalic>
@@ -234,45 +275,59 @@ function HeritageClusters() {
               Borobudur's sunrise silence. Prambanan's living culture, alongside the Kraton and
               Tamansari. Choose one, or experience both across your stay.
             </p>
-          </Reveal>
-          <div className="mt-14 grid grid-cols-1 md:grid-cols-2 gap-8">
-            {cards.map((c, i) => (
-              <Reveal key={c.title} delay={i * 120}>
-                <article className="group relative overflow-hidden border border-gold/20">
-                  <div className="aspect-[4/3] overflow-hidden">
-                    <img
-                      src={c.img}
-                      alt={c.title}
-                      loading="lazy"
-                      className="w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.03]"
-                    />
-                  </div>
-                  <div className="p-7">
-                    <h3 className="font-serif text-2xl md:text-3xl text-ivory">{c.title}</h3>
-                    <p className="mt-3 text-sm text-ivory/70 leading-relaxed">{c.subtitle}</p>
-                  </div>
-                </article>
-              </Reveal>
-            ))}
-          </div>
+          </ScrollReveal>
+          <ScrollReveal className="mt-14">
+            <CrossfadeToggle
+              aspect="aspect-[16/9]"
+              className="border border-gold/20 p-4 md:p-6"
+              options={[
+                {
+                  id: "borobudur",
+                  label: "Borobudur & the Misty North",
+                  image: clusterBoro,
+                  alt: "Borobudur at sunrise",
+                },
+                {
+                  id: "prambanan",
+                  label: "Prambanan, Kraton & Tamansari",
+                  image: clusterPramb,
+                  alt: "Prambanan temple complex",
+                },
+              ]}
+              caption={(active) => (
+                <p className="text-sm text-ivory/70 leading-relaxed max-w-xl">
+                  {subtitles[active.id]}
+                </p>
+              )}
+            />
+          </ScrollReveal>
         </div>
       </section>
-    </BatikBg>
+    </BatikWatermark>
   );
 }
 
 /* ---------- Breather Quote ---------- */
 function Breather() {
+  const reduced = useReducedMotion();
+  const { ref, inView } = useInView<HTMLParagraphElement>(0.3);
   return (
-    <BatikBg className="border-t border-ivory/5">
+    <BatikWatermark className="border-t border-ivory/5">
       <section className="py-32 md:py-48 px-6 text-center">
-        <Reveal>
-          <p className="font-serif italic text-3xl md:text-5xl text-ivory max-w-3xl mx-auto leading-tight">
-            &ldquo;In stillness, Java reveals itself.&rdquo;
-          </p>
-        </Reveal>
+        {/* stillness: opacity fade only — no slide, scale or parallax */}
+        <p
+          ref={ref}
+          className="font-serif italic text-3xl md:text-5xl text-ivory max-w-3xl mx-auto leading-tight"
+          style={
+            reduced
+              ? undefined
+              : { opacity: inView ? 1 : 0, transition: "opacity 1200ms ease-out" }
+          }
+        >
+          &ldquo;In stillness, Java reveals itself.&rdquo;
+        </p>
       </section>
-    </BatikBg>
+    </BatikWatermark>
   );
 }
 
