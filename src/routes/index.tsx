@@ -10,7 +10,6 @@ import clusterPramb from "@/assets/cluster-prambanan.jpg";
 import {
   BatikBg,
   BeyondJogja,
-  CountUp,
   GoldItalic,
   Reveal,
   SiteFooter,
