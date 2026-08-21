@@ -14,7 +14,6 @@ import {
   Reveal,
   SiteFooter,
   SiteHeader,
-  Skyline,
   WhatsAppCTA,
   WhatsAppFab,
 } from "@/components/site";
