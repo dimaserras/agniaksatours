@@ -465,43 +465,44 @@ function FoundingBanner() {
 function FAQ() {
   const items = [
     {
-      q: "How far in advance should I book?",
-      a: "Ideally two to three weeks. Sunrise slots and multi-day arrangements confirm faster when the fleet and drivers can be secured early.",
+      q: "What happens if the EV fleet is unavailable for my date?",
+      a: "You'll be moved to an equivalent premium-class vehicle at no extra cost, and we'll tell you before your journey begins — never on the day, never as a surprise.",
     },
     {
       q: "What is included in every tier?",
-      a: "Private EV (when available, always premium-class), English-speaking driver, hotel pickup and drop, mineral water, and entrance coordination.",
+      a: "Private vehicle with English-speaking driver, hotel pickup and drop, fuel and parking, mineral water, and entrance coordination. Classic, Signature and VIP differ in stops, pacing and add-ons.",
     },
     {
-      q: "Can we customize the itinerary?",
-      a: "Yes. We tailor cadence, stops, meal preferences and pacing over WhatsApp before your arrival.",
+      q: "How do Beyond Jogja trips work logistically?",
+      a: "Volcano and Dieng run as long day trips with early departures. Bromo, Karimunjawa and Bali are point-to-point transfers, priced per car rather than per guest, with driver rest and border logistics arranged for you.",
     },
     {
-      q: "How do we pay?",
-      a: "Bank transfer or accepted digital payment before your first day. No online checkout — arrangements are confirmed one-to-one on WhatsApp.",
+      q: "Can you accommodate larger groups?",
+      a: "Yes. Up to six guests travel in one vehicle. For seven or more we arrange a convoy or a larger premium vehicle, quoted individually on WhatsApp.",
     },
     {
-      q: "Do you offer transport-only services (not just full-day tours)?",
-      a: "Yes — airport transfers and long-distance transfers to Bromo, Karimunjawa and Bali are available.",
+      q: "How does booking and payment work?",
+      a: "Everything is arranged one-to-one on WhatsApp: we confirm dates, tier and itinerary, then send payment details. Bank transfer or accepted digital payment before your first day. No online checkout.",
     },
     {
-      q: "What happens if the EV fleet is unavailable for my date?",
-      a: "You'll be upgraded to an equivalent premium-class vehicle at no extra cost. We'll notify you before your journey begins.",
+      q: "How far in advance should I book?",
+      a: "Two to three weeks is ideal. Sunrise slots and multi-day arrangements confirm faster when the fleet and drivers can be secured early.",
     },
   ];
   const [open, setOpen] = useState<number | null>(0);
   return (
-    <BatikBg>
+    <BatikWatermark>
+      <SectionDivider tone="gold" flip />
       <section className="py-24 md:py-32 px-6">
         <div className="max-w-4xl mx-auto">
-          <Reveal>
+          <ScrollReveal>
             <p className="text-xs tracking-[0.3em] uppercase text-gold mb-3">
               Questions Before You Arrive?
             </p>
             <h2 className="font-serif text-4xl md:text-5xl text-ivory">
               Everything, <GoldItalic>Arranged in Advance</GoldItalic>
             </h2>
-          </Reveal>
+          </ScrollReveal>
           <div className="mt-12 border-t border-ivory/10">
             {items.map((it, i) => (
               <AccordionItem
@@ -513,17 +514,19 @@ function FAQ() {
               />
             ))}
           </div>
-          <Reveal>
+          <ScrollReveal>
             <div className="mt-14 pt-10 border-t border-ivory/10 text-center">
               <p className="text-ivory/80 mb-6 max-w-lg mx-auto">
-                Still have questions? Reach out directly — we'll walk you through it.
+                Still have questions? Reach out directly and we'll walk you through it.
               </p>
-              <WhatsAppCTA message="Hi Agni Aksa — I have a question about your tours." />
+              <WhatsAppCTA message="Hi Agni Aksa — I have a question about your tours.">
+                Reach Us on WhatsApp
+              </WhatsAppCTA>
             </div>
-          </Reveal>
+          </ScrollReveal>
         </div>
       </section>
-    </BatikBg>
+    </BatikWatermark>
   );
 }
 
