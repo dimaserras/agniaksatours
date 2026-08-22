@@ -54,14 +54,14 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <div className="bg-ivory">
-      <WhatsAppFab message="Hi Agni Aksa — I'd like to plan a private tour in Yogyakarta." />
+      <StickyWhatsAppButton message="Hi Agni Aksa — I'd like to plan a private tour in Yogyakarta." />
       <Hero />
       <TrustBar />
       <HowItWorks />
       <HeritageClusters />
       <Breather />
       <TieredPreview />
-      <BeyondJogja />
+      <BeyondJogjaCarousel />
       <Testimonials />
       <FoundingBanner />
       <FAQ />
