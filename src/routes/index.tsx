@@ -331,53 +331,50 @@ function Breather() {
 }
 
 /* ---------- Tiered Preview ---------- */
+// Prices come from src/lib/pricing.config.ts — never hardcode a figure here.
 function TieredPreview() {
-  const tiers = [
-    { name: "Classic", desc: "Core destinations only.", from: "Rp 1.500.000/pax" },
-    {
-      name: "Signature",
-      desc: "Our most recommended, with added heritage stops.",
-      from: "Rp 2.000.000/pax",
-      featured: true,
-    },
-    { name: "VIP", desc: "Full experience with premium add-ons.", from: "Rp 3.000.000/pax" },
-  ];
   return (
     <section className="bg-ivory py-24 md:py-32 px-6">
       <div className="max-w-6xl mx-auto">
-        <Reveal>
+        <ScrollReveal>
           <h2 className="font-serif text-4xl md:text-5xl text-charcoal max-w-3xl leading-tight">
             Classic, Signature, or VIP — <GoldItalic>You Decide</GoldItalic>
           </h2>
           <p className="mt-4 text-charcoal/70 max-w-xl">
-            Every tier includes your private EV, driver, and curated stops.
+            Every tier includes your private EV, driver, and hand-picked stops.
           </p>
-        </Reveal>
-        <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-6">
-          {tiers.map((t, i) => (
-            <Reveal key={t.name} delay={i * 120}>
-              <div
-                className={`relative p-8 h-full bg-white border transition-transform duration-300 hover:scale-[1.02] ${
-                  t.featured ? "border-gold shadow-[0_20px_50px_-30px_rgba(201,169,110,0.6)] md:-mt-4 md:pb-12" : "border-bronze/20"
-                }`}
-              >
-                {t.featured && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gold text-indigo text-[10px] tracking-[0.25em] uppercase px-3 py-1">
-                    Most Recommended
-                  </span>
-                )}
-                <p className="text-xs uppercase tracking-widest text-gold">Tier</p>
-                <h3 className="mt-2 font-serif text-3xl text-charcoal">{t.name}</h3>
-                <p className="mt-3 text-sm text-charcoal/70">{t.desc}</p>
-                <div className="mt-8 pt-6 border-t border-bronze/20">
-                  <p className="text-xs uppercase tracking-widest text-charcoal/50">Starting from</p>
-                  <p className="mt-1 font-serif text-2xl text-charcoal">{t.from}</p>
-                </div>
+        </ScrollReveal>
+        <ScrollReveal staggerDelay={100} className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-6">
+          {TIER_PREVIEW.map((t) => (
+            <div
+              key={t.name}
+              className={`relative p-8 h-full bg-white border transition-transform duration-300 hover:scale-[1.02] ${
+                t.featured
+                  ? "border-gold shadow-[0_20px_50px_-30px_rgba(201,169,110,0.6)] md:-mt-4 md:pb-12"
+                  : "border-bronze/20"
+              }`}
+            >
+              {t.featured && (
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gold text-indigo text-[10px] tracking-[0.25em] uppercase px-3 py-1">
+                  Most Recommended
+                </span>
+              )}
+              <p className="text-xs uppercase tracking-widest text-gold">Tier</p>
+              <h3 className="mt-2 font-serif text-3xl text-charcoal">{t.name}</h3>
+              <p className="mt-3 text-sm text-charcoal/70">{t.desc}</p>
+              <div className="mt-8 pt-6 border-t border-bronze/20">
+                <p className="text-xs uppercase tracking-widest text-charcoal/50">Starting from</p>
+                <p className="mt-1 font-serif text-2xl text-charcoal">
+                  {startingFromLabel(t.startingFrom, t.unit)}
+                </p>
               </div>
-            </Reveal>
+            </div>
           ))}
-        </div>
-        <div className="mt-14 text-center">
+        </ScrollReveal>
+        {!PRICING_IS_FINAL && (
+          <p className="mt-6 text-xs text-charcoal/50 text-center">{PRICING_DISCLAIMER}</p>
+        )}
+        <div className="mt-12 text-center">
           <Link
             to="/packages"
             className="inline-flex items-center gap-2 text-sm tracking-widest uppercase text-charcoal border-b border-gold pb-1 hover:text-gold transition"
