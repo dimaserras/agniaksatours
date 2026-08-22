@@ -559,7 +559,7 @@ function AccordionItem({
         </span>
       </button>
       <div
-        className={`grid transition-all duration-300 ease-in-out ${
+        className={`grid transition-all duration-[250ms] ease-in-out ${
           isOpen ? "grid-rows-[1fr] opacity-100 pb-6" : "grid-rows-[0fr] opacity-0"
         }`}
       >
