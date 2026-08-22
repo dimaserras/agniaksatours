@@ -8,14 +8,10 @@ import howArrival from "@/assets/how-arrival.jpg";
 import clusterBoro from "@/assets/cluster-borobudur.jpg";
 import clusterPramb from "@/assets/cluster-prambanan.jpg";
 import {
-  BatikBg,
-  BeyondJogja,
   GoldItalic,
-  Reveal,
   SiteFooter,
   SiteHeader,
   WhatsAppCTA,
-  WhatsAppFab,
 } from "@/components/site";
 import {
   BatikWatermark,
@@ -23,9 +19,12 @@ import {
   ParallaxImage,
   ScrollReveal,
   SectionDivider,
+  StickyWhatsAppButton,
   useInView,
   useReducedMotion,
 } from "@/components/motion";
+import { BeyondJogjaCarousel } from "@/components/beyond-carousel";
+import { PRICING_DISCLAIMER, PRICING_IS_FINAL, startingFromLabel, TIER_PREVIEW } from "@/lib/pricing.config";
 
 export const Route = createFileRoute("/")({
   head: () => ({
