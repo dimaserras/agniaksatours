@@ -386,18 +386,21 @@ function TieredPreview() {
   );
 }
 
-/* ---------- Testimonials ---------- */
+/* ---------- What Past Guests Say ---------- */
 // DO NOT populate with fabricated names, quotes, or statistics — verified guest data only
 function Testimonials() {
   return (
-    <BatikBg>
+    <BatikWatermark>
+      <SectionDivider tone="gold" flip />
       <section className="py-24 md:py-32 px-6">
         <div className="max-w-6xl mx-auto">
-          <Reveal>
-            <h2 className="font-serif text-4xl md:text-5xl text-ivory">Guest Stories</h2>
-          </Reveal>
+          <ScrollReveal>
+            <h2 className="font-serif text-4xl md:text-5xl text-ivory">
+              What Past <GoldItalic>Guests Say</GoldItalic>
+            </h2>
+          </ScrollReveal>
           <div className="mt-14 grid grid-cols-1">
-            <Reveal>
+            <ScrollReveal>
               <figure className="h-full p-10 md:p-14 border border-gold/20 bg-indigo/30 text-center max-w-3xl mx-auto">
                 <svg
                   width="28"
@@ -414,20 +417,29 @@ function Testimonials() {
                   soon.
                 </blockquote>
               </figure>
-            </Reveal>
+            </ScrollReveal>
           </div>
+          {/*
+            "Read All Reviews" → /reviews is intentionally disabled: the route does not exist yet
+            and a dead link would 404. Uncomment once src/routes/reviews.tsx is built.
+            <ScrollReveal className="mt-10 text-center">
+              <Link to="/reviews" className="text-sm tracking-widest uppercase text-gold border-b border-gold/50 pb-1 hover:text-ivory transition">
+                Read All Reviews →
+              </Link>
+            </ScrollReveal>
+          */}
         </div>
       </section>
-    </BatikBg>
+    </BatikWatermark>
   );
 }
 
 /* ---------- Founding Guest ---------- */
 function FoundingBanner() {
   return (
-    <BatikBg className="border-y border-gold/10">
+    <BatikWatermark className="border-y border-gold/10">
       <section className="py-14 px-6">
-        <Reveal>
+        <ScrollReveal>
           <div className="max-w-6xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             <div>
               <p className="text-xs tracking-[0.3em] uppercase text-gold mb-2">Limited</p>
@@ -439,11 +451,13 @@ function FoundingBanner() {
                 afterward.
               </p>
             </div>
-            <WhatsAppCTA message="Hi Agni Aksa — I'd like to claim the Founding Guest 15% off." />
+            <WhatsAppCTA message="Hi Agni Aksa — I'd like to claim the Founding Guest 15% off.">
+              Reach Us on WhatsApp
+            </WhatsAppCTA>
           </div>
-        </Reveal>
+        </ScrollReveal>
       </section>
-    </BatikBg>
+    </BatikWatermark>
   );
 }
 
