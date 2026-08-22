@@ -209,7 +209,8 @@ export function SiteFooter() {
         <div className="relative max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10">
           <div className="md:col-span-2">
             <p className="font-serif text-2xl text-ivory">Agni Aksa Tours</p>
-            <p className="mt-2 text-sm text-ivory/60 max-w-sm">
+            <p className="mt-2 font-serif italic text-gold">Curated, down to the hour.</p>
+            <p className="mt-3 text-sm text-ivory/60 max-w-sm">
               Private, chauffeured EV touring across Yogyakarta and Central Java.
             </p>
           </div>
@@ -225,21 +226,58 @@ export function SiteFooter() {
             <ul className="space-y-2 text-sm text-ivory/80">
               <li>
                 <a
-                  href={waLink("Hi Agni Aksa — I have a question.")}
+                  href={waLink("Hi Agni Aksa — I'd like to plan a private tour in Yogyakarta.")}
                   target="_blank"
                   rel="noreferrer"
                   className="hover:text-gold transition"
                 >
-                  WhatsApp
+                  Reach Us on WhatsApp
                 </a>
               </li>
               <li>Yogyakarta, Indonesia</li>
             </ul>
+            <div className="mt-4 flex items-center gap-4 text-ivory/70">
+              <a
+                href="https://instagram.com/"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Instagram"
+                className="hover:text-gold transition"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden="true">
+                  <rect x="3" y="3" width="18" height="18" rx="5" />
+                  <circle cx="12" cy="12" r="4" />
+                  <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none" />
+                </svg>
+              </a>
+              <a
+                href="https://facebook.com/"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Facebook"
+                className="hover:text-gold transition"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M13.5 21v-8h2.7l.4-3h-3.1V8.2c0-.9.3-1.5 1.5-1.5H16.7V4.1C16.4 4.1 15.4 4 14.2 4 11.8 4 10.2 5.4 10.2 8v2H7.5v3h2.7v8h3.3Z" />
+                </svg>
+              </a>
+              <a
+                href={waLink("Hi Agni Aksa — I have a question.")}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="WhatsApp"
+                className="hover:text-gold transition"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 2.1.55 4.14 1.6 5.94L2 22l4.28-1.12a9.9 9.9 0 0 0 5.76 1.83h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.87 9.87 0 0 0 12.04 2Z" />
+                </svg>
+              </a>
+            </div>
           </div>
         </div>
         <div className="relative max-w-6xl mx-auto mt-12 pt-6 border-t border-ivory/10 text-xs text-ivory/50 flex flex-wrap gap-4 justify-between">
           <span>© 2026 Agni Aksa Tours · Yogyakarta, Indonesia</span>
-          <span>Curated in silence.</span>
+          <span>Curated, down to the hour.</span>
         </div>
       </div>
     </footer>

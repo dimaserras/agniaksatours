@@ -8,14 +8,10 @@ import howArrival from "@/assets/how-arrival.jpg";
 import clusterBoro from "@/assets/cluster-borobudur.jpg";
 import clusterPramb from "@/assets/cluster-prambanan.jpg";
 import {
-  BatikBg,
-  BeyondJogja,
   GoldItalic,
-  Reveal,
   SiteFooter,
   SiteHeader,
   WhatsAppCTA,
-  WhatsAppFab,
 } from "@/components/site";
 import {
   BatikWatermark,
@@ -23,9 +19,12 @@ import {
   ParallaxImage,
   ScrollReveal,
   SectionDivider,
+  StickyWhatsAppButton,
   useInView,
   useReducedMotion,
 } from "@/components/motion";
+import { BeyondJogjaCarousel } from "@/components/beyond-carousel";
+import { PRICING_DISCLAIMER, PRICING_IS_FINAL, startingFromLabel, TIER_PREVIEW } from "@/lib/pricing.config";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -55,14 +54,14 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <div className="bg-ivory">
-      <WhatsAppFab message="Hi Agni Aksa — I'd like to plan a private tour in Yogyakarta." />
+      <StickyWhatsAppButton message="Hi Agni Aksa — I'd like to plan a private tour in Yogyakarta." />
       <Hero />
       <TrustBar />
       <HowItWorks />
       <HeritageClusters />
       <Breather />
       <TieredPreview />
-      <BeyondJogja />
+      <BeyondJogjaCarousel />
       <Testimonials />
       <FoundingBanner />
       <FAQ />
@@ -331,53 +330,50 @@ function Breather() {
 }
 
 /* ---------- Tiered Preview ---------- */
+// Prices come from src/lib/pricing.config.ts — never hardcode a figure here.
 function TieredPreview() {
-  const tiers = [
-    { name: "Classic", desc: "Core destinations only.", from: "Rp 1.500.000/pax" },
-    {
-      name: "Signature",
-      desc: "Our most recommended, with added heritage stops.",
-      from: "Rp 2.000.000/pax",
-      featured: true,
-    },
-    { name: "VIP", desc: "Full experience with premium add-ons.", from: "Rp 3.000.000/pax" },
-  ];
   return (
     <section className="bg-ivory py-24 md:py-32 px-6">
       <div className="max-w-6xl mx-auto">
-        <Reveal>
+        <ScrollReveal>
           <h2 className="font-serif text-4xl md:text-5xl text-charcoal max-w-3xl leading-tight">
             Classic, Signature, or VIP — <GoldItalic>You Decide</GoldItalic>
           </h2>
           <p className="mt-4 text-charcoal/70 max-w-xl">
-            Every tier includes your private EV, driver, and curated stops.
+            Every tier includes your private EV, driver, and hand-picked stops.
           </p>
-        </Reveal>
-        <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-6">
-          {tiers.map((t, i) => (
-            <Reveal key={t.name} delay={i * 120}>
-              <div
-                className={`relative p-8 h-full bg-white border transition-transform duration-300 hover:scale-[1.02] ${
-                  t.featured ? "border-gold shadow-[0_20px_50px_-30px_rgba(201,169,110,0.6)] md:-mt-4 md:pb-12" : "border-bronze/20"
-                }`}
-              >
-                {t.featured && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gold text-indigo text-[10px] tracking-[0.25em] uppercase px-3 py-1">
-                    Most Recommended
-                  </span>
-                )}
-                <p className="text-xs uppercase tracking-widest text-gold">Tier</p>
-                <h3 className="mt-2 font-serif text-3xl text-charcoal">{t.name}</h3>
-                <p className="mt-3 text-sm text-charcoal/70">{t.desc}</p>
-                <div className="mt-8 pt-6 border-t border-bronze/20">
-                  <p className="text-xs uppercase tracking-widest text-charcoal/50">Starting from</p>
-                  <p className="mt-1 font-serif text-2xl text-charcoal">{t.from}</p>
-                </div>
+        </ScrollReveal>
+        <ScrollReveal staggerDelay={100} className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-6">
+          {TIER_PREVIEW.map((t) => (
+            <div
+              key={t.name}
+              className={`relative p-8 h-full bg-white border transition-transform duration-300 hover:scale-[1.02] ${
+                t.featured
+                  ? "border-gold shadow-[0_20px_50px_-30px_rgba(201,169,110,0.6)] md:-mt-4 md:pb-12"
+                  : "border-bronze/20"
+              }`}
+            >
+              {t.featured && (
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gold text-indigo text-[10px] tracking-[0.25em] uppercase px-3 py-1">
+                  Most Recommended
+                </span>
+              )}
+              <p className="text-xs uppercase tracking-widest text-gold">Tier</p>
+              <h3 className="mt-2 font-serif text-3xl text-charcoal">{t.name}</h3>
+              <p className="mt-3 text-sm text-charcoal/70">{t.desc}</p>
+              <div className="mt-8 pt-6 border-t border-bronze/20">
+                <p className="text-xs uppercase tracking-widest text-charcoal/50">Starting from</p>
+                <p className="mt-1 font-serif text-2xl text-charcoal">
+                  {startingFromLabel(t.startingFrom, t.unit)}
+                </p>
               </div>
-            </Reveal>
+            </div>
           ))}
-        </div>
-        <div className="mt-14 text-center">
+        </ScrollReveal>
+        {!PRICING_IS_FINAL && (
+          <p className="mt-6 text-xs text-charcoal/50 text-center">{PRICING_DISCLAIMER}</p>
+        )}
+        <div className="mt-12 text-center">
           <Link
             to="/packages"
             className="inline-flex items-center gap-2 text-sm tracking-widest uppercase text-charcoal border-b border-gold pb-1 hover:text-gold transition"
@@ -390,18 +386,21 @@ function TieredPreview() {
   );
 }
 
-/* ---------- Testimonials ---------- */
+/* ---------- What Past Guests Say ---------- */
 // DO NOT populate with fabricated names, quotes, or statistics — verified guest data only
 function Testimonials() {
   return (
-    <BatikBg>
+    <BatikWatermark>
+      <SectionDivider tone="gold" flip />
       <section className="py-24 md:py-32 px-6">
         <div className="max-w-6xl mx-auto">
-          <Reveal>
-            <h2 className="font-serif text-4xl md:text-5xl text-ivory">Guest Stories</h2>
-          </Reveal>
+          <ScrollReveal>
+            <h2 className="font-serif text-4xl md:text-5xl text-ivory">
+              What Past <GoldItalic>Guests Say</GoldItalic>
+            </h2>
+          </ScrollReveal>
           <div className="mt-14 grid grid-cols-1">
-            <Reveal>
+            <ScrollReveal>
               <figure className="h-full p-10 md:p-14 border border-gold/20 bg-indigo/30 text-center max-w-3xl mx-auto">
                 <svg
                   width="28"
@@ -418,20 +417,29 @@ function Testimonials() {
                   soon.
                 </blockquote>
               </figure>
-            </Reveal>
+            </ScrollReveal>
           </div>
+          {/*
+            "Read All Reviews" → /reviews is intentionally disabled: the route does not exist yet
+            and a dead link would 404. Uncomment once src/routes/reviews.tsx is built.
+            <ScrollReveal className="mt-10 text-center">
+              <Link to="/reviews" className="text-sm tracking-widest uppercase text-gold border-b border-gold/50 pb-1 hover:text-ivory transition">
+                Read All Reviews →
+              </Link>
+            </ScrollReveal>
+          */}
         </div>
       </section>
-    </BatikBg>
+    </BatikWatermark>
   );
 }
 
 /* ---------- Founding Guest ---------- */
 function FoundingBanner() {
   return (
-    <BatikBg className="border-y border-gold/10">
+    <BatikWatermark className="border-y border-gold/10">
       <section className="py-14 px-6">
-        <Reveal>
+        <ScrollReveal>
           <div className="max-w-6xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             <div>
               <p className="text-xs tracking-[0.3em] uppercase text-gold mb-2">Limited</p>
@@ -443,11 +451,13 @@ function FoundingBanner() {
                 afterward.
               </p>
             </div>
-            <WhatsAppCTA message="Hi Agni Aksa — I'd like to claim the Founding Guest 15% off." />
+            <WhatsAppCTA message="Hi Agni Aksa — I'd like to claim the Founding Guest 15% off.">
+              Reach Us on WhatsApp
+            </WhatsAppCTA>
           </div>
-        </Reveal>
+        </ScrollReveal>
       </section>
-    </BatikBg>
+    </BatikWatermark>
   );
 }
 
@@ -455,43 +465,44 @@ function FoundingBanner() {
 function FAQ() {
   const items = [
     {
-      q: "How far in advance should I book?",
-      a: "Ideally two to three weeks. Sunrise slots and multi-day arrangements confirm faster when the fleet and drivers can be secured early.",
+      q: "What happens if the EV fleet is unavailable for my date?",
+      a: "You'll be moved to an equivalent premium-class vehicle at no extra cost, and we'll tell you before your journey begins — never on the day, never as a surprise.",
     },
     {
       q: "What is included in every tier?",
-      a: "Private EV (when available, always premium-class), English-speaking driver, hotel pickup and drop, mineral water, and entrance coordination.",
+      a: "Private vehicle with English-speaking driver, hotel pickup and drop, fuel and parking, mineral water, and entrance coordination. Classic, Signature and VIP differ in stops, pacing and add-ons.",
     },
     {
-      q: "Can we customize the itinerary?",
-      a: "Yes. We tailor cadence, stops, meal preferences and pacing over WhatsApp before your arrival.",
+      q: "How do Beyond Jogja trips work logistically?",
+      a: "Volcano and Dieng run as long day trips with early departures. Bromo, Karimunjawa and Bali are point-to-point transfers, priced per car rather than per guest, with driver rest and border logistics arranged for you.",
     },
     {
-      q: "How do we pay?",
-      a: "Bank transfer or accepted digital payment before your first day. No online checkout — arrangements are confirmed one-to-one on WhatsApp.",
+      q: "Can you accommodate larger groups?",
+      a: "Yes. Up to six guests travel in one vehicle. For seven or more we arrange a convoy or a larger premium vehicle, quoted individually on WhatsApp.",
     },
     {
-      q: "Do you offer transport-only services (not just full-day tours)?",
-      a: "Yes — airport transfers and long-distance transfers to Bromo, Karimunjawa and Bali are available.",
+      q: "How does booking and payment work?",
+      a: "Everything is arranged one-to-one on WhatsApp: we confirm dates, tier and itinerary, then send payment details. Bank transfer or accepted digital payment before your first day. No online checkout.",
     },
     {
-      q: "What happens if the EV fleet is unavailable for my date?",
-      a: "You'll be upgraded to an equivalent premium-class vehicle at no extra cost. We'll notify you before your journey begins.",
+      q: "How far in advance should I book?",
+      a: "Two to three weeks is ideal. Sunrise slots and multi-day arrangements confirm faster when the fleet and drivers can be secured early.",
     },
   ];
   const [open, setOpen] = useState<number | null>(0);
   return (
-    <BatikBg>
+    <BatikWatermark>
+      <SectionDivider tone="gold" flip />
       <section className="py-24 md:py-32 px-6">
         <div className="max-w-4xl mx-auto">
-          <Reveal>
+          <ScrollReveal>
             <p className="text-xs tracking-[0.3em] uppercase text-gold mb-3">
               Questions Before You Arrive?
             </p>
             <h2 className="font-serif text-4xl md:text-5xl text-ivory">
               Everything, <GoldItalic>Arranged in Advance</GoldItalic>
             </h2>
-          </Reveal>
+          </ScrollReveal>
           <div className="mt-12 border-t border-ivory/10">
             {items.map((it, i) => (
               <AccordionItem
@@ -503,17 +514,19 @@ function FAQ() {
               />
             ))}
           </div>
-          <Reveal>
+          <ScrollReveal>
             <div className="mt-14 pt-10 border-t border-ivory/10 text-center">
               <p className="text-ivory/80 mb-6 max-w-lg mx-auto">
-                Still have questions? Reach out directly — we'll walk you through it.
+                Still have questions? Reach out directly and we'll walk you through it.
               </p>
-              <WhatsAppCTA message="Hi Agni Aksa — I have a question about your tours." />
+              <WhatsAppCTA message="Hi Agni Aksa — I have a question about your tours.">
+                Reach Us on WhatsApp
+              </WhatsAppCTA>
             </div>
-          </Reveal>
+          </ScrollReveal>
         </div>
       </section>
-    </BatikBg>
+    </BatikWatermark>
   );
 }
 
@@ -546,7 +559,7 @@ function AccordionItem({
         </span>
       </button>
       <div
-        className={`grid transition-all duration-300 ease-in-out ${
+        className={`grid transition-all duration-[250ms] ease-in-out ${
           isOpen ? "grid-rows-[1fr] opacity-100 pb-6" : "grid-rows-[0fr] opacity-0"
         }`}
       >
